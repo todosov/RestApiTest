@@ -1,6 +1,6 @@
 package com.restapp;
 
-import com.restapp.Controller.RestController;
+import com.restapp.controller.RestController;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

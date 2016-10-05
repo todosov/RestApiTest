@@ -1,4 +1,4 @@
-package com.restapp.Controller;
+package com.restapp.controller;
 
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -6,7 +6,6 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by tadasyan
@@ -24,6 +23,9 @@ public class RestController {
         List<InputPart> inputParts = input.getFormDataMap().get("files");
         if (inputParts == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
+//        inputParts.stream().forEach(inputPart -> {
+//
+//        });
         return Response.ok().build();
     }
 
