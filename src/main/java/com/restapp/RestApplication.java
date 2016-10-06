@@ -1,21 +1,23 @@
 package com.restapp;
 
-import com.restapp.controller.RestController;
+import com.restapp.controller.RestEndpoint;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Created by tadasyan
+ */
 
-@ApplicationPath("api")
+@ApplicationPath("/rest")
 public class RestApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> classes = new HashSet<>();
-        classes.add(RestController.class);
-        classes.add(StockResource.class);
+        classes.add(RestEndpoint.class);
         return classes;
     }
 }
