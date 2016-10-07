@@ -1,9 +1,9 @@
 package com.restapp.controller;
 
-import com.restapp.entity.Data;
 import com.restapp.services.DataService;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.util.Base64;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,6 +11,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -42,8 +46,26 @@ public class RestEndpoint {
     @GET
     @Consumes("text/html")
     public Response test(){
-        List<Data> data = dataService.getAllData();
 
         return Response.ok().build();
+    }
+
+    private String getFileName(InputPart inputPart){
+        String[] contentDispositionHeader = inputPart.getHeaders().getFirst("Content-Disposition").split(";");
+        for (String name : contentDispositionHeader){
+            if (name.trim().startsWith("filename")){
+                String[] tmp = name.split("=");
+                return tmp[1].trim().replaceAll("\"","");
+            }
+        }
+        return "";
+    }
+
+    private void getFileBody(InputPart inputPart) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputPart.getBody(InputStream.class, null)));
+        String line;
+        while ((line = bufferedReader.readLine()) != null){
+
+        }
     }
 }

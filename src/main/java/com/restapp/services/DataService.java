@@ -1,10 +1,13 @@
 package com.restapp.services;
 
-import com.restapp.dao.DataDAO;
-import com.restapp.entity.Data;
+import com.restapp.dao.FileDAO;
+import com.restapp.dao.RowDAO;
+import com.restapp.entity.File;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,9 +18,25 @@ import java.util.List;
 public class DataService {
 
     @Inject
-    private DataDAO dataDAO;
+    private FileDAO fileDAO;
 
-    public List<Data> getAllData(){
-        return dataDAO.findAll();
+    @Inject
+    private RowDAO rowDAO;
+
+    public List<StringCount> getStringCounts(){
+        List<StringCount> result = new LinkedList<>();
+        rowDAO.findRowsGroupByString().stream().forEach(objects -> {
+            result.add(StringCount.builder().string((String)objects[0]).count((Long)objects[1]).build());
+        });
+        return result;
+    }
+
+    public void addFile(File file){
+        fileDAO.persist(file);
+    }
+
+    public File createFile(InputPart inputPart){
+        File.builder()
+                .name(inputPart.getHeaders().getFirst(""))
     }
 }

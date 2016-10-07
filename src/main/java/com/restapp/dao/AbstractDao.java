@@ -44,9 +44,13 @@ public abstract class AbstractDao<T extends Serializable> implements Serializabl
     }
 
     public List<T> findAll() {
-        final CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(clazz);
+        CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(clazz);
         criteriaQuery.select(criteriaQuery.from(clazz));
         return em.createQuery(criteriaQuery).getResultList();
+    }
+
+    public EntityManager getEm(){
+        return em;
     }
 
 }
