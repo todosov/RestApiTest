@@ -14,10 +14,19 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @Entity
 @Table(name = "file")
 public class File implements Serializable {
+
+    @Builder
+    public File(int id, String name, List<Row> rows) {
+        this.id = id;
+        this.name =name;
+        this.rows = rows;
+    }
+
+    public File(){
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +35,12 @@ public class File implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "file_row",
             joinColumns = @JoinColumn(name = "file_id"),
             inverseJoinColumns = @JoinColumn(name = "row_id"))
     private List<Row> rows;
 
-    public File(){
 
-    }
+
 }

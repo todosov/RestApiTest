@@ -32,11 +32,6 @@ public class DataService {
     }
 
     public void addFile(File file){
-        fileDAO.persist(file);
-    }
-
-    public File createFile(InputPart inputPart){
-        File.builder()
-                .name(inputPart.getHeaders().getFirst(""))
+        fileDAO.edit(file);
     }
 }

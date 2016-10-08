@@ -5,6 +5,7 @@
              version="2.1">
     <persistence-unit name="primary">
         <jta-data-source>java:jboss/datasources/mysql</jta-data-source>
-        <class>com.restapp.entity.Data</class>
+        <class>com.restapp.entity.File</class>
+        <class>com.restapp.entity.Row</class>
     </persistence-unit>
 </persistence>

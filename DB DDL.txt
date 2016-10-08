@@ -1,0 +1,21 @@
+CREATE TABLE file
+(
+    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30) DEFAULT '' NOT NULL
+);
+CREATE UNIQUE INDEX file_id_uindex ON file (id);
+CREATE TABLE row
+(
+    id BINARY(16) PRIMARY KEY NOT NULL,
+    content TEXT
+);
+CREATE UNIQUE INDEX row_id_uindex ON row (id);
+CREATE TABLE file_row
+(
+    file_id INT(11),
+    row_id BINARY(16),
+    CONSTRAINT file_id___fk FOREIGN KEY (file_id) REFERENCES file (id),
+    CONSTRAINT row_id___fk FOREIGN KEY (row_id) REFERENCES row (id)
+);
+CREATE INDEX file_id___fk ON file_row (file_id);
+CREATE INDEX row_id___fk ON file_row (row_id);
