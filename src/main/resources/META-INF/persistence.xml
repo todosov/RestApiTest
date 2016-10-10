@@ -7,5 +7,10 @@
         <jta-data-source>java:jboss/datasources/mysql</jta-data-source>
         <class>com.restapp.entity.File</class>
         <class>com.restapp.entity.Row</class>
+        <properties>
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+            <!--<property name="hibernate.format_sql" value="true"/>-->
+            <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+        </properties>
     </persistence-unit>
 </persistence>

@@ -7,6 +7,7 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.util.Base64;
 
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -28,7 +29,9 @@ public class RestEndpoint {
     @Inject
     private DataService dataService;
 
-    @Path("/upload")
+    @Inject
+    private ManagedExecutorService executorService;
+
     @POST
     @Consumes({"multipart/form-data"})
     public Response uploadFiles(MultipartFormDataInput input){
@@ -36,16 +39,13 @@ public class RestEndpoint {
         if (inputParts == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
         inputParts.stream().forEach(inputPart -> {
-            try {
-                fileHandler.fileProcessor(inputPart);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //fileHandler.fileProcessor(inputPart);
+            fileHandler.setInputPart(inputPart);
+            executorService.execute(fileHandler);
         });
         return Response.ok().build();
     }
 
-    @Path("/result")
     @GET
     @Produces("application/json")
     public Response test(){

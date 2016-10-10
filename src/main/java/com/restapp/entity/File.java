@@ -40,7 +40,4 @@ public class File implements Serializable {
             joinColumns = @JoinColumn(name = "file_id"),
             inverseJoinColumns = @JoinColumn(name = "row_id"))
     private List<Row> rows;
-
-
-
 }
